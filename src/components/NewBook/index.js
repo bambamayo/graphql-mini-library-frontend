@@ -1,24 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOOK, ALL_BOOKS } from "../queries";
+import { CREATE_BOOK, ALL_BOOKS } from "../../queries";
 
-const NewBook = (props) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuhtor] = useState("");
-  const [published, setPublished] = useState("");
-  const [genre, setGenre] = useState("");
-  const [genres, setGenres] = useState([]);
+export default function NewBook() {
+  const [title, setTitle] = React.useState("");
+  const [author, setAuhtor] = React.useState("");
+  const [published, setPublished] = React.useState("");
+  const [genre, setGenre] = React.useState("");
+  const [genres, setGenres] = React.useState([]);
 
   const [createBook] = useMutation(CREATE_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }],
   });
 
-  if (!props.show) {
-    return null;
-  }
-
-  const submit = async (event) => {
-    event.preventDefault();
+  const submit = async (e) => {
+    e.preventDefault();
     const data = {
       title,
       author,
@@ -44,21 +40,21 @@ const NewBook = (props) => {
     <div>
       <form onSubmit={submit}>
         <div>
-          title
+          <label>title</label>
           <input
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          author
+          <label>author</label>
           <input
             value={author}
             onChange={({ target }) => setAuhtor(target.value)}
           />
         </div>
         <div>
-          published
+          <label>published</label>
           <input
             type="number"
             value={published}
@@ -79,6 +75,4 @@ const NewBook = (props) => {
       </form>
     </div>
   );
-};
-
-export default NewBook;
+}

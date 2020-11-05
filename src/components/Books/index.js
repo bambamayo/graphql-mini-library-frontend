@@ -1,18 +1,15 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { ALL_BOOKS } from "../queries";
+import { ALL_BOOKS } from "../../queries";
 
-const Books = (props) => {
-  const result = useQuery(ALL_BOOKS);
-  if (!props.show) {
-    return null;
-  }
+export default function Books() {
+  const { loading, error, data: result } = useQuery(ALL_BOOKS);
 
-  if (result.loading) {
+  if (loading) {
     return <div>Loadinggg</div>;
   }
 
-  if (result.error) {
+  if (error) {
     return <div>Could not fetch books</div>;
   }
 
@@ -23,14 +20,14 @@ const Books = (props) => {
       <table>
         <tbody>
           <tr>
-            <th></th>
+            <th>s/n</th>
             <th>author</th>
             <th>published</th>
           </tr>
-          {result.data.allBooks.map((book) => (
+          {result.allBooks.map((book) => (
             <tr key={book.id}>
               <td>{book.title}</td>
-              <td>{book.author}</td>
+              <td>{book.author.name}</td>
               <td>{book.published}</td>
             </tr>
           ))}
@@ -38,6 +35,4 @@ const Books = (props) => {
       </table>
     </div>
   );
-};
-
-export default Books;
+}
