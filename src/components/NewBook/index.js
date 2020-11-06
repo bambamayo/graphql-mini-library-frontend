@@ -8,9 +8,23 @@ export default function NewBook() {
   const [published, setPublished] = React.useState("");
   const [genre, setGenre] = React.useState("");
   const [genres, setGenres] = React.useState([]);
+  const [error, setError] = React.useState(null);
 
   const [createBook] = useMutation(CREATE_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }],
+    onError: (error) => {
+      console.log(error);
+      setError(error.graphQLErrors[0].message);
+    },
+    update: (store, response) => {
+      const dataInStore = store.readQuery({ query: ALL_BOOKS });
+      store.writeQuery({
+        query: ALL_BOOKS,
+        data: {
+          ...dataInStore,
+          allBooks: [...dataInStore.allBooks, response.data.addBook],
+        },
+      });
+    },
   });
 
   const submit = async (e) => {
@@ -38,6 +52,7 @@ export default function NewBook() {
 
   return (
     <div>
+      {error && <p>{error}</p>}
       <form onSubmit={submit}>
         <div>
           <label>title</label>

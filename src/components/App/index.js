@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -18,9 +19,10 @@ import Signup from "../Signup";
 
 export default function App() {
   const [token, setToken] = React.useState(null);
+  const client = useApolloClient();
 
   const login = React.useCallback((token, user) => {
-    setToken(true);
+    setToken(token);
     localStorage.setItem("token", token);
     localStorage.setItem("userId", user.id);
   }, []);
@@ -28,7 +30,8 @@ export default function App() {
   const logout = React.useCallback(() => {
     setToken(null);
     localStorage.clear();
-  }, []);
+    client.resetStore();
+  }, [client]);
 
   let routes;
 
@@ -62,13 +65,7 @@ export default function App() {
         <Route path={ROUTES.NEWBOOK}>
           <NewBook />
         </Route>
-        <Route path={ROUTES.SIGN_IN}>
-          <Signin />
-        </Route>
-        <Route path={ROUTES.SIGN_UP}>
-          <Signup />
-        </Route>
-        <Redirect to={ROUTES.SIGN_IN} />
+        <Redirect to={ROUTES.HOME} />
       </Switch>
     );
   }

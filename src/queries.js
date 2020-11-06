@@ -61,7 +61,7 @@ export const CREATE_USER = gql`
     $password: String!
     $favoriteGenre: String!
   ) {
-    login(
+    createUser(
       username: $username
       fullname: $fullname
       password: $password

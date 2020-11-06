@@ -1,7 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../queries";
-import { useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
@@ -14,15 +13,15 @@ export default function Signin() {
 
   const auth = React.useContext(AuthContext);
 
-  const [login, result] = useMutation(LOGIN);
+  const [login, result] = useMutation(LOGIN, {
+    onError: (error) => {
+      setError(error.graphQLErrors[0].message);
+    },
+  });
 
-  useEffect(() => {
-    if (result.error) {
-      setError(result.error);
-    }
+  React.useEffect(() => {
     if (result.data) {
-      const token = result.data.login.token;
-      const user = result.data.login.user;
+      const { token, user } = result.data.login;
       auth.login(token, user);
     }
   }, [auth, result]);

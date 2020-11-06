@@ -34,7 +34,7 @@ export default function Layout({ children }) {
             )}
             {auth.token && (
               <li>
-                <Link to={ROUTES.HOME}>log out</Link>
+                <button onClick={auth.logout}>log out</button>
               </li>
             )}
           </ul>
