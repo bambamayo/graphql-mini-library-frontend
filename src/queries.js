@@ -28,7 +28,9 @@ export const CREATE_BOOK = gql`
   mutation createBook($data: CreateNewBookInput!) {
     addBook(data: $data) {
       title
-      author
+      author {
+        name
+      }
     }
   }
 `;
@@ -71,6 +73,31 @@ export const CREATE_USER = gql`
       user {
         username
       }
+    }
+  }
+`;
+
+export const BOOK_ADDED = gql`
+  subscription {
+  bookAdded {
+    title
+      author {
+        name
+      }
+      id
+      published
+    }
+  }
+}
+  `;
+
+export const AUTHOR_EDITED = gql`
+  subscription {
+    authorEdited {
+      name
+      bookCount
+      id
+      born
     }
   }
 `;

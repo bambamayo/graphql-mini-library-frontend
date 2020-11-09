@@ -10,7 +10,18 @@ export default function Authors() {
   const auth = React.useContext(AuthContext);
 
   const { loading, error, data } = useQuery(ALL_AUTHORS);
-  const [authorEdit, mutation] = useMutation(EDIT_AUTHOR);
+  const [authorEdit, mutation] = useMutation(EDIT_AUTHOR, {
+    update: (store, response) => {
+      const dataInStore = store.readQuery({ query: ALL_AUTHORS });
+      store.writeQuery({
+        query: ALL_AUTHORS,
+        data: {
+          ...dataInStore,
+          allAuthors: [...dataInStore.allAuthors, response.data.editAuthor],
+        },
+      });
+    },
+  });
 
   const submit = (e) => {
     e.preventDefault();
@@ -52,6 +63,7 @@ export default function Authors() {
       {auth.token && (
         <div>
           <h2>Set birthyear</h2>
+          {mutation.data && <p>Author edited successfully</p>}
           <form onSubmit={submit}>
             <div>
               name
@@ -67,7 +79,9 @@ export default function Authors() {
                 onChange={({ target }) => setBorn(target.value)}
               />
             </div>
-            <button type="submit">update author</button>
+            <button disabled={mutation.loading} type="submit">
+              update author
+            </button>
           </form>
         </div>
       )}
