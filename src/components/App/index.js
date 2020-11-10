@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import * as ROUTES from "../../constants/routes";
-import AuthContext from "../../context/AuthContext";
+import AppContext from "../../context/AppContext";
 import Authors from "../Authors";
 import Books from "../Books";
 import Layout from "../Layout";
@@ -19,7 +19,15 @@ import Signup from "../Signup";
 
 export default function App() {
   const [token, setToken] = React.useState(null);
+  const [alert, setAlert] = React.useState(null);
   const client = useApolloClient();
+
+  React.useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
   const login = React.useCallback((token, user) => {
     setToken(token);
@@ -32,6 +40,10 @@ export default function App() {
     localStorage.clear();
     client.resetStore();
   }, [client]);
+
+  const handleAlert = React.useCallback((alert) => {
+    setAlert(alert);
+  }, []);
 
   let routes;
 
@@ -71,10 +83,10 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AppContext.Provider value={{ token, login, logout, alert, handleAlert }}>
       <Router>
         <Layout>{routes}</Layout>
       </Router>
-    </AuthContext.Provider>
+    </AppContext.Provider>
   );
 }

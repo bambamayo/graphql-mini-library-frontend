@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../queries";
-import AuthContext from "../../context/AuthContext";
+import AppContext from "../../context/AppContext";
 import { useHistory } from "react-router-dom";
 
 export default function Signup() {
@@ -13,7 +13,7 @@ export default function Signup() {
 
   const history = useHistory();
 
-  const auth = React.useContext(AuthContext);
+  const auth = React.useContext(AppContext);
 
   const [createUser, result] = useMutation(CREATE_USER, {
     onError: (error) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { ALL_BOOKS } from "../../queries";
+import NewBook from "../NewBook";
 
 export default function Books() {
   const { loading, error, data: result } = useQuery(ALL_BOOKS);
@@ -33,6 +34,7 @@ export default function Books() {
           ))}
         </tbody>
       </table>
+      <NewBook />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
-import AuthContext from "../../context/AuthContext";
+import AppContext from "../../context/AppContext";
 
 export default function Layout({ children }) {
-  const auth = React.useContext(AuthContext);
+  const auth = React.useContext(AppContext);
 
   return (
     <>

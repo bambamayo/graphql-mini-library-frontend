@@ -1,25 +1,46 @@
 import React from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { ALL_AUTHORS, EDIT_AUTHOR } from "../../queries";
-import AuthContext from "../../context/AuthContext";
+import {
+  useQuery,
+  useMutation,
+  useApolloClient,
+  useSubscription,
+} from "@apollo/client";
+import { ALL_AUTHORS, AUTHOR_EDITED, EDIT_AUTHOR } from "../../queries";
+import AppContext from "../../context/AppContext";
 
 export default function Authors() {
   const [name, setName] = React.useState("");
   const [born, setBorn] = React.useState("");
+  const [alert, setAlert] = React.useState("");
 
-  const auth = React.useContext(AuthContext);
+  const auth = React.useContext(AppContext);
+  const client = useApolloClient();
+
+  const updateCacheWith = (editedAuthor) => {
+    const includedIn = (set, object) =>
+      set.map((p) => p.id).includes(object.id);
+
+    const dataInStore = client.readQuery({ query: ALL_AUTHORS });
+    if (!includedIn(dataInStore.allAuthors, editedAuthor)) {
+      client.writeQuery({
+        query: ALL_AUTHORS,
+        data: { allAuthors: dataInStore.allAuthors.concat(editedAuthor) },
+      });
+    }
+  };
 
   const { loading, error, data } = useQuery(ALL_AUTHORS);
   const [authorEdit, mutation] = useMutation(EDIT_AUTHOR, {
     update: (store, response) => {
-      const dataInStore = store.readQuery({ query: ALL_AUTHORS });
-      store.writeQuery({
-        query: ALL_AUTHORS,
-        data: {
-          ...dataInStore,
-          allAuthors: [...dataInStore.allAuthors, response.data.editAuthor],
-        },
-      });
+      updateCacheWith(response.data.editAuthor);
+    },
+  });
+
+  useSubscription(AUTHOR_EDITED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const editedAuthor = subscriptionData.data.authorEdited;
+      setAlert(`${editedAuthor.name} born year was updated`);
+      updateCacheWith(editedAuthor);
     },
   });
 
@@ -42,6 +63,12 @@ export default function Authors() {
 
   return (
     <div>
+      {alert && (
+        <div>
+          {alert}
+          <span>&times;</span>
+        </div>
+      )}
       <h2>Authors</h2>
       <table>
         <tbody>
@@ -63,7 +90,6 @@ export default function Authors() {
       {auth.token && (
         <div>
           <h2>Set birthyear</h2>
-          {mutation.data && <p>Author edited successfully</p>}
           <form onSubmit={submit}>
             <div>
               name

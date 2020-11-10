@@ -28,6 +28,8 @@ export const CREATE_BOOK = gql`
   mutation createBook($data: CreateNewBookInput!) {
     addBook(data: $data) {
       title
+      id
+      published
       author {
         name
       }
@@ -40,6 +42,7 @@ export const EDIT_AUTHOR = gql`
     editAuthor(name: $name, setBornTo: $setBornTo) {
       name
       born
+      id
     }
   }
 `;
@@ -79,8 +82,8 @@ export const CREATE_USER = gql`
 
 export const BOOK_ADDED = gql`
   subscription {
-  bookAdded {
-    title
+    bookAdded {
+      title
       author {
         name
       }
@@ -88,8 +91,7 @@ export const BOOK_ADDED = gql`
       published
     }
   }
-}
-  `;
+`;
 
 export const AUTHOR_EDITED = gql`
   subscription {
