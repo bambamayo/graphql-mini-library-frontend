@@ -22,6 +22,14 @@ export default function Signup() {
   });
 
   React.useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
+    }
+  }, [error]);
+
+  React.useEffect(() => {
     if (result.data) {
       const { token, user } = result.data.createUser;
       auth.login(token, user);
@@ -39,44 +47,76 @@ export default function Signup() {
     }
   };
   return (
-    <div>
-      <h2>Create your free account</h2>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>fullname</label>
+    <div className="w-11/12 mx-auto my-5 p-3 md:w-3/6">
+      <h2 className="text-center font-bold text-lg lg:text-2xl my-2 uppercase">
+        Create your free account
+      </h2>
+      {error && (
+        <div className="rounded-lg w-full md:w-8/12 mx-auto py-2 px-2 font-bold text-base text-white bg-red-600">
+          {error}
+        </div>
+      )}
+      <form
+        className="w-full bg-gray-400 border-gray-600 border-2 mt-5 p-3 flex flex-col items-center"
+        onSubmit={handleFormSubmit}
+      >
+        <div className="mb-3 w-full p-2 flex flex-col">
+          <label className="inline-block font-bold text-base mb-2">
+            fullname
+          </label>
           <input
+            required
+            className="p-2 text-base rounded-md border-transparent outline-none"
             type="text"
             value={fullname}
             onChange={({ target }) => setFullname(target.value)}
           />
         </div>
-        <div>
-          <label>username</label>
+        <div className="mb-3 w-full p-2 flex flex-col">
+          <label className="inline-block font-bold text-base mb-2">
+            username
+          </label>
           <input
+            required
+            className="p-2 text-base rounded-md border-transparent outline-none"
             type="text"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
-        <div>
-          <label>password</label>
+        <div className="mb-3 w-full p-2 flex flex-col">
+          <label className="inline-block font-bold text-base mb-2">
+            password
+          </label>
           <input
+            required
+            className="p-2 text-base rounded-md border-transparent outline-none"
             type="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <div>
-          <label>favourite Genre</label>
+        <div className="mb-3 w-full p-2 flex flex-col">
+          <label className="inline-block font-bold text-base mb-2">
+            favourite Genre
+          </label>
           <input
+            required
+            className="p-2 text-base rounded-md border-transparent outline-none"
             type="text"
             value={favGenre}
             onChange={({ target }) => setFavGenre(target.value)}
           />
         </div>
-        <div>
-          <button disabled={result.loading}>sign in</button>
+        <div className="mb-5 w-full p-2">
+          <button
+            className={`w-full text-white text-base bg-red-500 p-2 hover:opacity-70 transition-all duration-100 ease-in rounded-md ${
+              result.loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
+            disabled={result.loading}
+          >
+            sign in
+          </button>
         </div>
       </form>
     </div>

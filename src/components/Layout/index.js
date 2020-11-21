@@ -8,33 +8,65 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <header>
-        <div>
-          <Link to={ROUTES.HOME}>PubLibrary</Link>
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to={ROUTES.AUTHORS}>Authors</Link>
+      <header className="h-10 shadow-md">
+        <nav className="h-full w-11/12 md:container lg:container m-auto flex items-center justify-between">
+          <div>
+            <Link
+              className="font-mono text-lg md:text-xl font-bold"
+              to={ROUTES.HOME}
+            >
+              PubLibrary
+            </Link>
+          </div>
+          <ul className="flex w-2/4 md:w-3/12 justify-between items-center">
+            <li className="text-sm font-semibold text-gray-700">
+              <Link
+                className="hover:opacity-70 transition-all duration-100 ease-in"
+                to={ROUTES.AUTHORS}
+              >
+                Authors
+              </Link>
             </li>
+
             {auth.token && (
-              <li>
-                <Link to={ROUTES.NEWBOOK}>New book</Link>
+              <li className="text-sm font-semibold text-gray-700">
+                <Link
+                  className="hover:opacity-70 transition-all duration-100 ease-in"
+                  to={ROUTES.NEWBOOK}
+                >
+                  Newbook
+                </Link>
+              </li>
+            )}
+
+            {!auth.token && (
+              <li className="text-sm font-semibold text-gray-700">
+                <Link
+                  className="hover:opacity-70 transition-all duration-100 ease-in"
+                  to={ROUTES.SIGN_IN}
+                >
+                  Sign in
+                </Link>
               </li>
             )}
             {!auth.token && (
-              <li>
-                <Link to={ROUTES.SIGN_IN}>Sign in</Link>
-              </li>
-            )}
-            {!auth.token && (
-              <li>
-                <Link to={ROUTES.SIGN_UP}>Sign up</Link>
+              <li className="text-sm font-semibold text-gray-700">
+                <Link
+                  className="hover:opacity-70 transition-all duration-100 ease-in"
+                  to={ROUTES.SIGN_UP}
+                >
+                  Sign up
+                </Link>
               </li>
             )}
             {auth.token && (
-              <li>
-                <button onClick={auth.logout}>log out</button>
+              <li className="text-sm font-semibold text-white">
+                <button
+                  className="bg-red-500 p-2 hover:opacity-70 transition-all duration-100 ease-in rounded-md"
+                  onClick={auth.logout}
+                >
+                  log out
+                </button>
               </li>
             )}
           </ul>
