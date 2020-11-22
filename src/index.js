@@ -24,11 +24,11 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/",
+  uri: "https://enigmatic-cove-56325.herokuapp.com/",
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri: `ws://enigmatic-cove-56325.herokuapp.com/graphql`,
   options: {
     reconnect: true,
   },
