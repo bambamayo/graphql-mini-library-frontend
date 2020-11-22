@@ -18,8 +18,8 @@ export default function Layout({ children }) {
               PubLibrary
             </Link>
           </div>
-          <ul className="flex w-2/4 md:w-3/12 justify-between items-center">
-            <li className="text-sm font-semibold text-gray-700">
+          <ul className="flex w-3/5 md:w-3/12 justify-between items-center">
+            <li className="text-xs md:text-sm font-semibold text-gray-700">
               <Link
                 className="hover:opacity-70 transition-all duration-100 ease-in"
                 to={ROUTES.AUTHORS}
@@ -29,7 +29,7 @@ export default function Layout({ children }) {
             </li>
 
             {auth.token && (
-              <li className="text-sm font-semibold text-gray-700">
+              <li className="text-xs md:text-sm font-semibold text-gray-700">
                 <Link
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.NEWBOOK}
@@ -40,7 +40,7 @@ export default function Layout({ children }) {
             )}
 
             {!auth.token && (
-              <li className="text-sm font-semibold text-gray-700">
+              <li className="text-xs md:text-sm font-semibold text-gray-700">
                 <Link
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.SIGN_IN}
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
               </li>
             )}
             {!auth.token && (
-              <li className="text-sm font-semibold text-gray-700">
+              <li className="text-xs md:text-sm font-semibold text-gray-700">
                 <Link
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.SIGN_UP}
@@ -60,7 +60,7 @@ export default function Layout({ children }) {
               </li>
             )}
             {auth.token && (
-              <li className="text-sm font-semibold text-white">
+              <li className="text-xs md:text-sm font-semibold text-white">
                 <button
                   className="bg-red-500 p-2 hover:opacity-70 transition-all duration-100 ease-in rounded-md"
                   onClick={auth.logout}
