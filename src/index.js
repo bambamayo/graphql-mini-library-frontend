@@ -28,7 +28,7 @@ const httpLink = createHttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://enigmatic-cove-56325.herokuapp.com/graphql`,
+  uri: `wss://enigmatic-cove-56325.herokuapp.com/graphql`,
   options: {
     reconnect: true,
   },
