@@ -35,7 +35,7 @@ export default function Books() {
   if (loading) {
     return (
       <div className="container p-3 text-base md:text-lg lg:text-lg font-bold">
-        Loadinggg....
+        Loadinggg...
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function Books() {
             <tr key={book.id} className="border-gray-800 border-b-2 p-2">
               <td>{book.title}</td>
               <td>{book.author.name}</td>
-              <td>{book.published}</td>
+              <td className="text-center">{book.published}</td>
             </tr>
           ))}
         </tbody>
