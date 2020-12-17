@@ -1,9 +1,14 @@
 import React from "react";
 import { useApolloClient, useQuery, useSubscription } from "@apollo/client";
 import { ALL_BOOKS, BOOK_ADDED } from "../../queries";
+import AppContext from "../../context/AppContext";
+import * as ROUTES from "../../constants/routes";
+import { Link } from "react-router-dom";
 
 export default function Books() {
   const { loading, error, data: result } = useQuery(ALL_BOOKS);
+
+  const auth = React.useContext(AppContext);
 
   const client = useApolloClient();
 
@@ -65,6 +70,17 @@ export default function Books() {
           ))}
         </tbody>
       </table>
+
+      {!auth.token && (
+        <div className="w-full text-sm md:text-base text-left mt-3 mb-3">
+          <p>
+            <Link className="underline font-bold" to={ROUTES.SIGN_IN}>
+              Log into your account
+            </Link>{" "}
+            to add new book
+          </p>
+        </div>
+      )}
     </div>
   );
 }

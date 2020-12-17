@@ -7,6 +7,8 @@ import {
 } from "@apollo/client";
 import { ALL_AUTHORS, AUTHOR_EDITED, EDIT_AUTHOR } from "../../queries";
 import AppContext from "../../context/AppContext";
+import * as ROUTES from "../../constants/routes";
+import { Link } from "react-router-dom";
 
 export default function Authors() {
   const [name, setName] = React.useState("");
@@ -72,7 +74,7 @@ export default function Authors() {
   if (loading) {
     return (
       <div className="container p-3 text-base md:text-lg lg:text-lg font-bold">
-        loadinggg
+        loadinggg...
       </div>
     );
   }
@@ -115,6 +117,17 @@ export default function Authors() {
           ))}
         </tbody>
       </table>
+
+      {!auth.token && (
+        <div className="w-full text-sm md:text-base text-left mt-3 mb-3">
+          <p>
+            <Link className="underline font-bold" to={ROUTES.SIGN_IN}>
+              Log into your account
+            </Link>{" "}
+            to edit author details
+          </p>
+        </div>
+      )}
 
       {auth.token && (
         <div className="w-11/12 mx-auto my-3 p-3 md:w-3/6">
