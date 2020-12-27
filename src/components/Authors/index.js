@@ -9,6 +9,7 @@ import { ALL_AUTHORS, AUTHOR_EDITED, EDIT_AUTHOR } from "../../queries";
 import AppContext from "../../context/AppContext";
 import * as ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
+import Spinner from "../Spinner";
 
 export default function Authors() {
   const [name, setName] = React.useState("");
@@ -73,9 +74,7 @@ export default function Authors() {
 
   if (loading) {
     return (
-      <div className="container p-3 text-base md:text-lg lg:text-lg font-bold">
-        loadinggg...
-      </div>
+      <Spinner />
     );
   }
 

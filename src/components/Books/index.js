@@ -4,6 +4,7 @@ import { ALL_BOOKS, BOOK_ADDED } from "../../queries";
 import AppContext from "../../context/AppContext";
 import * as ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
+import Spinner from "../Spinner"
 
 export default function Books() {
   const { loading, error, data: result } = useQuery(ALL_BOOKS);
@@ -34,9 +35,7 @@ export default function Books() {
 
   if (loading) {
     return (
-      <div className="container p-3 text-base md:text-lg lg:text-lg font-bold">
-        Loadinggg...
-      </div>
+      <Spinner />
     );
   }
 

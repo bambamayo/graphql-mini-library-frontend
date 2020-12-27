@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import AppContext from "../../context/AppContext";
 
@@ -19,49 +19,54 @@ export default function Layout({ children }) {
             </Link>
           </div>
           <ul className="flex w-3/5 md:w-3/12 justify-between items-center">
-            <li className="text-xs md:text-sm font-semibold text-gray-700">
-              <Link
+            <li className="text-xs md:text-sm font-bold text-gray-700">
+              <NavLink
+                activeClassName="opacity-70"
                 className="hover:opacity-70 transition-all duration-100 ease-in"
                 to={ROUTES.AUTHORS}
               >
                 Authors
-              </Link>
+              </NavLink>
             </li>
 
             {auth.token && (
-              <li className="text-xs md:text-sm font-semibold text-gray-700">
-                <Link
+              <li className="text-xs md:text-sm font-bold text-gray-700">
+                <NavLink
+                  activeClassName="opacity-70"
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.NEWBOOK}
                 >
                   Newbook
-                </Link>
+                </NavLink>
               </li>
             )}
 
             {!auth.token && (
-              <li className="text-xs md:text-sm font-semibold text-gray-700">
-                <Link
+              <li className="text-xs md:text-sm font-bold text-gray-700">
+                <NavLink
+                  activeClassName="opacity-70"
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.SIGN_IN}
                 >
                   Sign in
-                </Link>
+                </NavLink>
               </li>
             )}
             {!auth.token && (
-              <li className="text-xs md:text-sm font-semibold text-gray-700">
-                <Link
+              <li className="text-xs md:text-sm font-bold text-gray-700">
+                <NavLink
+                  activeClassName="opacity-70"
                   className="hover:opacity-70 transition-all duration-100 ease-in"
                   to={ROUTES.SIGN_UP}
                 >
                   Sign up
-                </Link>
+                </NavLink>
               </li>
             )}
             {auth.token && (
-              <li className="text-xs md:text-sm font-semibold text-white">
+              <li className="text-xs md:text-sm font-bold text-white">
                 <button
+                  activeClassName="opacity-70"
                   className="bg-red-500 p-2 hover:opacity-70 transition-all duration-100 ease-in rounded-md"
                   onClick={auth.logout}
                 >
